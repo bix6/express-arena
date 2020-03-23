@@ -174,6 +174,72 @@ app.get('/lotto', (req, res) => {
     res.send(responseString);
 })
 
+app.get('/hello', (req, res) => {
+    res
+        .status(204)
+        .end();
+});
+
+app.get('/video', (req, res) => {
+    const video = {
+        title: 'Bees and Trees',
+        description: 'Ever seen a Bee in a Tree?',
+        length: 'bzzzzzz'
+    }
+    res.json(video);
+});
+
+app.get('/colors', (req, res) => {
+    const colors = [
+        {
+            name: "red",
+            rgb: "FF00000"
+        },
+        {
+            name: "green",
+            rgb: "00FF00"
+        },
+        {
+            name: "blue",
+            rgb: "0000FF"
+        }
+    ];
+    res.json(colors);
+})
+
+app.get('/grade', (req, res) => {
+    const { mark } = req.query;
+
+    if (!mark) {
+        return res.status(400).send('Please provide a mark');
+    }
+
+    const numericMark = parseFloat(mark);
+    if (Number.isNaN(numericMark)) {
+        return res
+            .status(400)
+            .send('Mark must be a numeric value');
+    }
+
+    if (numericMark < 0 || numericMark > 100) {
+        return res.status(400).send('Mark must be in range 0 to 100');
+    }
+
+    if (numericMark >= 90) {
+        return res.send('A + +');
+    }
+
+    if (numericMark >= 80) {
+        return res.send('B');
+    }
+
+    if (numericMark >= 70) {
+        return res.send('C U L8R');
+    }
+
+    res.send('F');
+});
+
 app.listen(8000, () => {
     console.log('Express server is listening on port 8000!');
 });
